@@ -5,6 +5,8 @@ const server=http.createServer(app)// accepts a request listener
 const path = require("path");//--> path.join deta h 
 const socketio = require("socket.io");
 const io=socketio(server);// its an object
+
+
 // for static files
 app.use(express.static(path.join(__dirname,"public")));
 app.set('view engine','ejs');
@@ -25,9 +27,13 @@ io.on("connection",(socket)=>{
         console.log(data)
         io.emit("recieved-msg", {
             msg: data.msg,
-            id: socket.id
+            id: socket.id,
+            username: data.username || "Anonumous"
+           
         });
     })
+    
+    
 })
 
 const port =  3000;
